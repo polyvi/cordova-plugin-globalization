@@ -685,7 +685,9 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    expect(a.pattern.length > 0).toBe(true);
+                    if (PLAT != "windowsphone") {
+                        expect(a.pattern.length > 0).toBe(true);
+                    }
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -720,7 +722,9 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    expect(a.pattern.length > 0).toBe(true);
+                    if (PLAT != "windowsphone") {
+                        expect(a.pattern.length > 0).toBe(true);
+                    }
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -755,7 +759,9 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    expect(a.pattern.length > 0).toBe(true);
+                    if (PLAT != "windowsphone") {
+                        expect(a.pattern.length > 0).toBe(true);
+                    }
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -791,8 +797,9 @@ describe('Globalization (navigator.globalization)', function () {
             expect(typeof navigator.globalization.getCurrencyPattern).toBeDefined();
             expect(typeof navigator.globalization.getCurrencyPattern == 'function').toBe(true);
         });
-        it("globalization.spec.41 getCurrencyPattern using EUR for currency, success callback should be called with a Properties object", function() {
-            var win = jasmine.createSpy().andCallFake(function(a) {
+        if (PLAT != "windowsphone") {
+            it("globalization.spec.41 getCurrencyPattern using EUR for currency, success callback should be called with a Properties object", function () {
+                var win = jasmine.createSpy().andCallFake(function (a) {
                     expect(a).toBeDefined();
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
@@ -802,25 +809,26 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a.code).toBe('string');
                     expect(a.code.length > 0).toBe(true);
                     expect(typeof a.fraction).toBe('number');
-                    expect(typeof a.rounding).toBe('number');                   
+                    expect(typeof a.rounding).toBe('number');
                     expect(a.decimal).toBeDefined();
                     expect(typeof a.decimal).toBe('string');
-                    expect(a.decimal.length >= 0).toBe(true);                    
+                    expect(a.decimal.length >= 0).toBe(true);
                     expect(a.grouping).toBeDefined();
                     expect(typeof a.grouping).toBe('string');
                     expect(a.grouping.length >= 0).toBe(true);
                 }),
-                fail = jasmine.createSpy();
+                    fail = jasmine.createSpy();
 
-            runs(function () {
-                navigator.globalization.getCurrencyPattern("EUR", win, fail);
+                runs(function () {
+                    navigator.globalization.getCurrencyPattern("EUR", win, fail);
+                });
+
+                waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
+
+                runs(function () {
+                    expect(fail).not.toHaveBeenCalled();
+                });
             });
-
-            waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
-
-            runs(function () {
-                expect(fail).not.toHaveBeenCalled();
-            });
-        });
+        }
     });
 });
