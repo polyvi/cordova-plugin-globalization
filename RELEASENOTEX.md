@@ -20,3 +20,16 @@
 -->
 # Release Note X
 
+
+### 0.2.5 Wed Jan 08 2014 15:15:00 GMT+0800 (CST)
+ *  added releasenotex.md
+ *  CB-5719 Updated version and RELEASENOTES.md for release 0.2.5
+ *  CB-5658 Update license comment formatting of doc/index.md
+ *  CB-5658 Add doc.index.md for Globalization plugin
+ *  CB-5658 Delete stale snapshot of plugin docs
+ *  Add Apache license file
+ *  [CB-5565] Incremented plugin version on dev branch.
+ *  [CB-5565] Updated version and RELEASENOTES.md for release 0.2.4
+ *  [ubuntu] add missing file
+ *  add ubuntu platform
+ *  Added amazon-fireos platform. Change to use amazon-fireos as a platform if the user agent string contains 'cordova-amazon-fireos'
