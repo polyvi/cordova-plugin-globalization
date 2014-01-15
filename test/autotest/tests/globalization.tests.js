@@ -17,8 +17,41 @@
  * under the License.
 */
 describe('Globalization (navigator.globalization)', function () {
+
+    //not supported on bb10
+    if (cordova.platformId === 'blackberry10') {
+        return;
+    }
+
     it("globalization.spec.1 should exist", function() {
         expect(navigator.globalization).toBeDefined();
+    });
+    
+    describe("getPreferredLanguage", function() {
+        it("globalization.spec.1 should exist", function() {
+            expect(typeof navigator.globalization.getPreferredLanguage).toBeDefined();
+            expect(typeof navigator.globalization.getPreferredLanguage == 'function').toBe(true);
+        });
+        it("globalization.spec.3 getPreferredLanguage success callback should be called with a Properties object", function() {
+            var win = jasmine.createSpy().andCallFake(function(a) {
+                    expect(a).toBeDefined();
+                    expect(typeof a).toBe('object');
+                    expect(a.value).toBeDefined();
+                    expect(typeof a.value).toBe('string');
+                    expect(a.value.length > 0).toBe(true);
+                }),
+                fail = jasmine.createSpy();
+
+            runs(function () {
+                navigator.globalization.getPreferredLanguage(win, fail);
+            });
+
+            waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
+
+            runs(function () {
+                expect(fail).not.toHaveBeenCalled();
+            });
+        });
     });
     
     describe("getLocaleName", function() {
@@ -45,6 +78,16 @@ describe('Globalization (navigator.globalization)', function () {
             runs(function () {
                 expect(fail).not.toHaveBeenCalled();
             });
+        });
+    });
+    
+    describe('Globalization Constants (window.Globalization)', function () {
+        it("globalization.spec.1 should exist", function() {
+            expect(window.GlobalizationError).toBeDefined();
+            expect(window.GlobalizationError.UNKNOWN_ERROR).toBe(0);
+            expect(window.GlobalizationError.FORMATTING_ERROR).toBe(1);
+            expect(window.GlobalizationError.PARSING_ERROR).toBe(2);
+            expect(window.GlobalizationError.PATTERN_ERROR).toBe(3);
         });
     });
     
@@ -468,7 +511,7 @@ describe('Globalization (navigator.globalization)', function () {
                 fail = jasmine.createSpy();
 
             runs(function () {
-                navigator.globalization.getDateNames(win, fail, {item: 'days'});
+                navigator.globalization.getDateNames(win, fail, {type: 'wide', item: 'days'});
             });
 
             waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
@@ -489,7 +532,7 @@ describe('Globalization (navigator.globalization)', function () {
                 fail = jasmine.createSpy();
 
             runs(function () {
-                navigator.globalization.getDateNames(win, fail, {item: 'months'});
+                navigator.globalization.getDateNames(win, fail, {type: 'wide', item: 'months'});
             });
 
             waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
@@ -685,9 +728,7 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    if (PLAT != "windowsphone") {
-                        expect(a.pattern.length > 0).toBe(true);
-                    }
+                    expect(a.pattern.length > 0).toBe(true);
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -722,9 +763,7 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    if (PLAT != "windowsphone") {
-                        expect(a.pattern.length > 0).toBe(true);
-                    }
+                    expect(a.pattern.length > 0).toBe(true);
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -759,9 +798,7 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
                     expect(typeof a.pattern).toBe('string');
-                    if (PLAT != "windowsphone") {
-                        expect(a.pattern.length > 0).toBe(true);
-                    }
+                    expect(a.pattern.length > 0).toBe(true);
                     expect(typeof a.symbol).toBe('string');
                     expect(typeof a.fraction).toBe('number');
                     expect(typeof a.rounding).toBe('number');
@@ -797,9 +834,8 @@ describe('Globalization (navigator.globalization)', function () {
             expect(typeof navigator.globalization.getCurrencyPattern).toBeDefined();
             expect(typeof navigator.globalization.getCurrencyPattern == 'function').toBe(true);
         });
-        if (PLAT != "windowsphone") {
-            it("globalization.spec.41 getCurrencyPattern using EUR for currency, success callback should be called with a Properties object", function () {
-                var win = jasmine.createSpy().andCallFake(function (a) {
+        it("globalization.spec.41 getCurrencyPattern using EUR for currency, success callback should be called with a Properties object", function() {
+            var win = jasmine.createSpy().andCallFake(function(a) {
                     expect(a).toBeDefined();
                     expect(typeof a).toBe('object');
                     expect(a.pattern).toBeDefined();
@@ -809,26 +845,25 @@ describe('Globalization (navigator.globalization)', function () {
                     expect(typeof a.code).toBe('string');
                     expect(a.code.length > 0).toBe(true);
                     expect(typeof a.fraction).toBe('number');
-                    expect(typeof a.rounding).toBe('number');
+                    expect(typeof a.rounding).toBe('number');                   
                     expect(a.decimal).toBeDefined();
                     expect(typeof a.decimal).toBe('string');
-                    expect(a.decimal.length >= 0).toBe(true);
+                    expect(a.decimal.length >= 0).toBe(true);                    
                     expect(a.grouping).toBeDefined();
                     expect(typeof a.grouping).toBe('string');
                     expect(a.grouping.length >= 0).toBe(true);
                 }),
-                    fail = jasmine.createSpy();
+                fail = jasmine.createSpy();
 
-                runs(function () {
-                    navigator.globalization.getCurrencyPattern("EUR", win, fail);
-                });
-
-                waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
-
-                runs(function () {
-                    expect(fail).not.toHaveBeenCalled();
-                });
+            runs(function () {
+                navigator.globalization.getCurrencyPattern("EUR", win, fail);
             });
-        }
+
+            waitsFor(function () { return win.wasCalled; }, "win never called", Tests.TEST_TIMEOUT);
+
+            runs(function () {
+                expect(fail).not.toHaveBeenCalled();
+            });
+        });
     });
 });
