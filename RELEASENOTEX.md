@@ -7,9 +7,9 @@
 # to you under the Apache License, Version 2.0 (the
 # "License"); you may not use this file except in compliance
 # with the License.  You may obtain a copy of the License at
-# 
+#
 # http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -21,7 +21,7 @@
 # Release Note X
 
 
-### 0.2.5 Wed Jan 08 2014 15:15:00 GMT+0800 (CST)
+### 0.2.5 Mon Jan 27 2014 16:41:45 GMT+0800 (CST)
  *  added releasenotex.md
  *  CB-5719 Updated version and RELEASENOTES.md for release 0.2.5
  *  CB-5658 Update license comment formatting of doc/index.md
@@ -33,3 +33,4 @@
  *  [ubuntu] add missing file
  *  add ubuntu platform
  *  Added amazon-fireos platform. Change to use amazon-fireos as a platform if the user agent string contains 'cordova-amazon-fireos'
+ *  sync cordova-mpbile-spec-test into cordova-plugin-globalization
