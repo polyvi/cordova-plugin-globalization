@@ -34,3 +34,10 @@
  *  add ubuntu platform
  *  Added amazon-fireos platform. Change to use amazon-fireos as a platform if the user agent string contains 'cordova-amazon-fireos'
  *  sync cordova-mpbile-spec-test into cordova-plugin-globalization
+
+
+## 0.2.6 (Thu Apr 03 2014)
+
+
+ *  Updated RELEASENOTEX.md for release 0.2.5
+ *  sync cordova-mpbile-spec-test into cordova-plugin-globalization
